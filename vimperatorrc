@@ -1,0 +1,10 @@
+nmap h gT
+nmap l gt
+
+nnoremap j 10j
+nnoremap k 10k
+
+nmap a :back<CR>
+nmap s :forward<CR>
+
+set hintchars=qwertyuiopasdfghjklzxcvbnm

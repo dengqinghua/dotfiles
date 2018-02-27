@@ -1,0 +1,93 @@
+set hlsearch
+set visualbell
+
+let mapleader = " "
+
+nnoremap <silent> <leader>w :w<CR>
+nnoremap <silent> <leader>q :q<CR>
+nnoremap <silent> <leader>v v$h
+
+" 去掉highlight显示
+nnoremap <silent> <leader>d :nohlsearch<CR>
+
+" ============ 窗口相关 ============
+" 设置窗口跳转
+noremap <silent> H <C-W>h
+noremap <silent> L <C-W>l
+noremap <silent> <C-H> <C-W>h
+noremap <silent> <C-L> <C-W>l
+
+" ideavim支持调用idea intellj原生的action.
+" 在这里 https://anotepad.com/notes/7g8gn4 列出了可以使用的actionlist
+" 也可以通过在 ideavim 中调用 `:actionlist` 查看所有支持的action
+" 下面的所有的配置都依赖于idea本身的actionlist. 通过原生的配置, 可以使得
+" 原有的vim配置习惯保持不变.
+
+" 打开当前文件所在的目录
+nnoremap <leader>x :action ActivateProjectToolWindow<CR>
+" 关闭(close)其他的窗口 只剩下vim编辑区域
+nnoremap <leader>c :action HideAllWindows<CR>
+" ============ 窗口相关 ============
+
+" ============ 查找相关 ============
+" 搜索任意文件
+nnoremap <leader>f :action GotoFile<CR>
+" 查找最近打开的文件
+nnoremap <leader>e :action RecentFiles<CR>
+" 查找方法定义, 这个也用了`]`, 和vim保持一致
+nnoremap <leader>] :action GotoDeclaration<CR>
+" 查找java的klass
+nnoremap <leader>k :action GotoClass<CR>
+" 查找类对应的test
+nnoremap <leader>t :action GotoTest<CR>
+nnoremap <leader>s :action SearchEverywhere<CR>
+" ============ 查找相关 ============
+
+" 查看当前文件的所有方法, class等结构信息
+nnoremap <silent> <leader>b :action ActivateStructureToolWindow<CR>
+
+" ============ 跳转相关 ============
+" 跳转到前一个地方, vim的 <C-O>
+nnoremap - :action Back<CR>
+" 跳转到后一个地方, vim的 <C-I>
+nnoremap = :action Forward<CR>
+" ============ 跳转相关 ============
+
+" ============ 编译, 运行相关 ============
+nnoremap <leader>r :action RunClass<CR>
+"nnoremap <leader>s :action Run<CR>
+" ============ 编译, 运行, debug相关 ============
+
+" ============ 拷贝路径 ============
+nnoremap <leader>' :action CopyPaths<CR>
+nnoremap <leader>; :action CopyReference<CR>
+" ============ 拷贝路径 ============
+
+nnoremap <leader>g :action Generate<CR>
+" 移动并修改当前文件
+nnoremap <leader>m :action RenameFile<CR>
+" 创建新的元素
+nnoremap <leader>n :action NewElement<CR>
+" 查看javadoc
+nnoremap <leader>h :action QuickJavaDoc<CR>
+" 获取当前方法的返回类型
+nnoremap <leader>i :action ExpressionTypeInfo<CR>
+
+" ============ 调试相关 ============
+" 添加断点
+nnoremap ;b :action ToggleLineBreakpoint<CR>
+" 执行语句
+nnoremap ;e :action EvaluateExpression<CR>
+" 开始debug
+nnoremap ;d :action Debug<CR>
+" 使得程序继续执行
+nnoremap ;r :action Resume<CR>
+" step
+nnoremap ;s :action StepInto<CR>
+" next
+nnoremap ;n :action StepOver<CR>
+" ============ 调试相关 ============
+
+" 关闭项目
+nnoremap ,q :action CloseProject<CR>
+

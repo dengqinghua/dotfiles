@@ -1,6 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vundle
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
 
@@ -19,31 +16,42 @@ Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-vividchalk'
 
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'vim-scripts/tComment'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'scrooloose/syntastic'
+"Plugin 'vim-syntastic/syntastic'
+Plugin 'neomake/neomake'
+
 Plugin 'junegunn/vim-easy-align'
 Plugin 'majutsushi/tagbar'
 Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'mhinz/vim-signify'
 Plugin 'honza/vim-snippets'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
-"Plugin 'gregsexton/gitv'
+Plugin 'gregsexton/gitv'
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-ragtag'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
-" Plugin 'rking/ag.vim'
-" Plugin 'skalnik/vim-vroom'
 Plugin 'christoomey/vim-tmux-navigator'
+
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'beigebrucewayne/Turtles'
+Plugin 'danilo-augusto/vim-afterglow'
+Plugin 'tpope/vim-vividchalk'
+Plugin 'myhere/vim-nodejs-complete'
+Plugin 'posva/vim-vue'
+Plugin 'moll/vim-node'
+
+Plugin 'morhetz/gruvbox'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'fatih/vim-go'
 
 call vundle#end()
 
@@ -81,7 +89,7 @@ set noswapfile
 "  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 "endif
 
-autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
+"autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " basic key mappings
@@ -89,10 +97,10 @@ autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
 nnoremap j gj
 nnoremap k gk
 
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 runtime! macros/matchit.vim
 
@@ -141,6 +149,8 @@ nnoremap <silent> <leader>o :ZoomToggle<CR>
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga      <Plug>(EasyAlign)
 
+autocmd FileType vue syntax sync fromstart
+
 let g:vimshell_editor_command='/usr/local/bin/vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,12 +196,10 @@ map T <Plug>(easymotion-sn)
 " colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
-  set guifont=Monaco:h12
+  "set guifont=Menlo\ Regular:h13
+  set guifont=Monaco:h13
+  colorscheme solarized
   set background=dark
-  colorscheme vividchalk
-  highlight SignifySignAdd    gui=bold guibg=NONE guifg=#009900
-  highlight SignifySignDelete gui=bold guibg=NONE guifg=#ff2222
-  highlight SignifySignChange gui=bold guibg=NONE guifg=#bbbb00
 else
   highlight SignifySignAdd    cterm=bold ctermbg=NONE ctermfg=119
   highlight SignifySignDelete cterm=bold ctermbg=NONE ctermfg=167
@@ -200,8 +208,13 @@ endif
 highlight clear SignColumn
 
 " tags
-map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=.js --exclude=.css --exclude=log --exclude=.log -R * `gem environment gemdir`/gems/*<CR><CR>
-"bundle show rails
+"map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=.js --exclude=.css --exclude=log --exclude=.log -R * `gem environment gemdir`/gems/*<CR><CR>
+"
+"map <Leader>rt :!ctags -R app/**/*.rb lib/**/*.rb config/**/*.rb `gem environment gemdir`/gems/acti* --exclude=.css --exclude=log --exclude=.log<CR>
+
+map <Leader>rt :!ctags -R app/**/*.rb lib/**/*.rb config/**/*.rb `bundle show --paths` --exclude={.css,.log,.js}<CR><CR>
+
+"map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=.js --exclude=.css --exclude=log --exclude=.log -R * `gem environment gemdir`/gems/*<CR><CR>
 
 " 窗口切换
 noremap <silent> <C-H> <C-W><C-H>
@@ -223,18 +236,18 @@ nnoremap <silent> <leader>x :NERDTreeFind<CR>
 nnoremap <silent> <leader>w :w<CR>
 nnoremap <silent> <leader>q :q<CR>
 
+nnoremap <silent> <leader>c <C-W><C-O>
+
 noremap <silent> K k
 noremap <silent> U u
 
 nnoremap <silent> <leader>v v$h
 nnoremap <silent> <leader>a :e ~/Documents/records/records.markdown<CR>
-nnoremap <silent> <leader>m :e ~/workspace/rails_guides/source/<CR>
+nnoremap <silent> <leader>m :e ~/workspace/guides/source/<CR>
 
 noremap <silent> <leader>df :Gdiff<CR>
 noremap <silent> <leader>gb :Gblame<CR>
 noremap <silent> <leader>gs :Gstatus<CR>
-
-"let Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 " ========= Restore cursor to file position in previous editing session =========
 set viminfo='10,\"100,:20,%,n~/.viminfo'
