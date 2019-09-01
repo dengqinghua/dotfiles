@@ -23,6 +23,7 @@ Plugin 'vim-scripts/matchit.zip'
 Plugin 'vim-scripts/tComment'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/c.vim'
 
 Plugin 'junegunn/vim-easy-align'
@@ -47,6 +48,8 @@ Plugin 'posva/vim-vue'
 Plugin 'moll/vim-node'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'ternjs/tern_for_vim'
+
 Plugin 'rust-lang/rust.vim'
 Plugin 'fatih/vim-go'
 " 用于调试go
@@ -56,6 +59,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'drewtempelmeyer/palenight.vim'
 
 Plugin 'slim-template/vim-slim.git'
+Plugin 'neomake/neomake'
+" Plugin 'ludovicchabant/vim-gutentags'
 
 call vundle#end()
 
@@ -77,7 +82,7 @@ set splitright
 set diffopt+=vertical
 set tabstop=2 shiftwidth=2 softtabstop=2
 "set list listchars=tab:»▸,trail:·,nbsp:·
-"set list listchars=tab:→\ ,trail:·,nbsp:·
+set list listchars=tab:→\ ,trail:·,nbsp:·
 "set listchars=tab:..,trail:_,extends:>,precedes:<,nbsp:~
 set laststatus=2
 set wildmenu
@@ -85,7 +90,7 @@ set wildmode=list:longest,list:full
 set encoding=utf-8
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set termencoding=utf-8
-set tags=./tags;$HOME
+set tags=./tags
 set nobackup
 set noswapfile
 set backspace=indent,eol,start
@@ -100,6 +105,9 @@ set backspace=indent,eol,start
 autocmd BufNewFile,BufRead *.conf set filetype=json
 
 autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
+
+autocmd FileType javascript nnoremap <silent> <buffer> <C-]> :TernDef<CR>
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " basic key mappings
@@ -161,6 +169,9 @@ nmap ga      <Plug>(EasyAlign)
 
 let g:vimshell_editor_command='/usr/local/bin/vim'
 
+autocmd! BufWritePost * Neomake
+call neomake#configure#automake('nw', 750)
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -220,9 +231,12 @@ highlight clear SignColumn
 " 建立 Ruby 的 tags, 建议使用 ripper_tags; 需要先安装 ripper-tags
 " gem install ripper-tags
 " 见 https://stackoverflow.com/a/17786089 和 https://vi.stackexchange.com/a/3062
-autocmd BufWritePost *.rb silent! ![ -f "./tags" ] && (cat ./tags | (cat && ripper-tags % -f -) | grep -v '^\!_' | sort | uniq -u  > tags~ && mv tags~ tags)
+" autocmd BufWritePost *.rb silent !ripper-tags %
+ 
+" autocmd BufWritePost *.rb silent ![ -f "./tags" ] && (cat ./tags | (cat && ripper-tags % -f -) | grep -v '^\!_' | sort | uniq -u  > tags~ && mv tags~ tags)
+map <Leader>rt :!gem ripper-tags; ripper-tags -R<CR>
 
-map <Leader>rt :!ctags -R app/**/*.rb lib/**/*.rb config/**/*.rb `bundle show --paths` --exclude={.css,.log,.js}<CR><CR>
+" map <Leader>rt :!ctags -R app/**/*.rb lib/**/*.rb config/**/*.rb `bundle show --paths` --exclude={.css,.log,.js}<CR><CR>
 
 "map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=.js --exclude=.css --exclude=log --exclude=.log -R * `gem environment gemdir`/gems/*<CR><CR>
 
@@ -234,6 +248,9 @@ noremap <silent> H <C-W><C-H>
 noremap <silent> L <C-W><C-L>
 
 abbr pry require "pry";binding.pry
+abbr jpy const pry = require('pryjs');eval(pry.it);
+abbr jst 'use strict';
+
 abbr edn end
 abbrev so source ~/.vimrc<CR>
 
@@ -319,7 +336,3 @@ com! FormatJSON %!json
 noremap <silent> <leader>fj :FormatJSON<CR>
 
 let g:go_version_warning = 0
-
-abbr cmd ⌘
-abbr opt ⌥
-abbr ctl ⌃
