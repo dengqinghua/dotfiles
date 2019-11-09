@@ -55,7 +55,6 @@ nnoremap = :action Forward<CR>
 
 " ============ 编译, 运行相关 ============
 nnoremap <leader>r :action RunClass<CR>
-"nnoremap <leader>s :action Run<CR>
 " ============ 编译, 运行, debug相关 ============
 
 " ============ 拷贝路径 ============
@@ -63,7 +62,6 @@ nnoremap <leader>' :action CopyPaths<CR>
 nnoremap <leader>; :action CopyReference<CR>
 " ============ 拷贝路径 ============
 
-nnoremap <leader>g :action Generate<CR>
 " 移动并修改当前文件
 nnoremap <leader>m :action RenameFile<CR>
 " 创建新的元素
@@ -72,6 +70,14 @@ nnoremap <leader>n :action NewElement<CR>
 nnoremap <leader>h :action QuickJavaDoc<CR>
 " 获取当前方法的返回类型
 nnoremap <leader>i :action ExpressionTypeInfo<CR>
+
+" ============ 提示相关 ============
+" 跳转到下一个错误的地方
+nnoremap <C-n> :action GotoNextError<CR>
+" 跳转到上一个错误的地方
+nnoremap <C-p> :action GotoPreviousError<CR>
+" 提示 intention
+nnoremap <C-i> :action ShowIntentionActions<CR>
 
 " ============ 调试相关 ============
 " 添加断点
