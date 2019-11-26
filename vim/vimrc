@@ -90,7 +90,6 @@ set wildmode=list:longest,list:full
 set encoding=utf-8
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set termencoding=utf-8
-set tags=./tags
 set nobackup
 set noswapfile
 set backspace=indent,eol,start
@@ -107,7 +106,9 @@ autocmd BufNewFile,BufRead *.conf set filetype=json
 autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 
 autocmd FileType javascript nnoremap <silent> <buffer> <C-]> :TernDef<CR>
-let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_javascript_enabled_makers = ['eslint']
+
+let g:go_metalinter_enabled = ['vet']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " basic key mappings
@@ -211,7 +212,7 @@ map T <Plug>(easymotion-sn)
 " colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
-  set guifont=Monaco:h12
+  set guifont=Monaco:h12.5
   colorscheme palenight
 else
   set nonumber
@@ -234,7 +235,9 @@ highlight clear SignColumn
 " autocmd BufWritePost *.rb silent !ripper-tags %
  
 " autocmd BufWritePost *.rb silent ![ -f "./tags" ] && (cat ./tags | (cat && ripper-tags % -f -) | grep -v '^\!_' | sort | uniq -u  > tags~ && mv tags~ tags)
-map <Leader>rt :!gem ripper-tags; ripper-tags -R<CR>
+" https://www.rubydoc.info/gems/gem-ripper-tags
+" https://www.rubydoc.info/gems/gem-ripper-tags
+map <Leader>rt :!gem ripper_tags; ripper-tags -R<CR>
 
 " map <Leader>rt :!ctags -R app/**/*.rb lib/**/*.rb config/**/*.rb `bundle show --paths` --exclude={.css,.log,.js}<CR><CR>
 
@@ -328,7 +331,6 @@ noremap ;b :DlvToggleBreakpoint<CR>
 noremap ;t :DlvTest<CR>
 noremap ;d :DlvDebug<CR>
 " ========= go =========
-"
 
 " 需要安装 json 这个包
 " npm install json
