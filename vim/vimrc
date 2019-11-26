@@ -106,9 +106,8 @@ autocmd BufNewFile,BufRead *.conf set filetype=json
 autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 
 autocmd FileType javascript nnoremap <silent> <buffer> <C-]> :TernDef<CR>
-" let g:neomake_javascript_enabled_makers = ['eslint']
-
-let g:go_metalinter_enabled = ['vet']
+" 这里需要安装 golint 和 golangci_lint
+let g:neomake_go_enabled_makers = ['golint', 'go', 'golangci_lint']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " basic key mappings
@@ -330,7 +329,6 @@ noremap <leader>gt i . "github.com/smartystreets/goconvey/convey"<CR>  "testing"
 noremap ;b :DlvToggleBreakpoint<CR>
 noremap ;t :DlvTest<CR>
 noremap ;d :DlvDebug<CR>
-" ========= go =========
 
 " 需要安装 json 这个包
 " npm install json
