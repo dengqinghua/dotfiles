@@ -84,6 +84,8 @@ nnoremap <C-n> :action GotoNextError<CR>
 nnoremap <C-p> :action GotoPreviousError<CR>
 " 提示 intention
 nnoremap <C-i> :action ShowIntentionActions<CR>
+" 提示 重构
+nnoremap <C-f> :action RefactoringMenu<CR>
 
 " ============ 调试相关 ============
 " 添加断点
@@ -108,4 +110,7 @@ nnoremap gt :action ActivateTerminalToolWindow<CR>
 
 " 移除多余的 imports
 nnoremap <leader>w :action OptimizeImports<CR>
-nnoremap <leader>a :action Annotate<CR>
+
+" git 相关操作
+nnoremap ga :action Annotate<CR>
+nnoremap gd :action Compare.LastVersion<CR>
