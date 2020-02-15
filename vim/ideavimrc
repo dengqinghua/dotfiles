@@ -10,6 +10,12 @@ nnoremap <silent> <leader>v v$h
 " 去掉highlight显示
 nnoremap <silent> <leader>d :nohlsearch<CR>
 
+" easymotion使用, 需要安装 AceJump 和 IdeaVim-EasyMotion 的插件
+set easymotion
+let g:EasyMotion_do_mappin = 0
+let g:EasyMotion_startofline = 1
+map t <Plug>(easymotion-bd-w)
+
 " ============ 窗口相关 ============
 " 设置窗口跳转
 noremap <silent> H <C-W>h
@@ -34,8 +40,8 @@ nnoremap <leader>c :action HideAllWindows<CR>
 nnoremap <leader>f :action GotoFile<CR>
 " 查找最近打开的文件
 nnoremap <leader>e :action RecentFiles<CR>
-" 查找方法定义, 这个也用了`]`, 和vim保持一致
-nnoremap <leader>] :action GotoDeclaration<CR>
+" 查找方法实现, 这个也用了`]`, 和vim保持一致
+nnoremap <leader>] :action GotoImplementation<CR>
 " 查找java的klass
 nnoremap <leader>k :action GotoClass<CR>
 " 查找类对应的test
@@ -58,7 +64,7 @@ nnoremap <leader>r :action RunClass<CR>
 " ============ 编译, 运行, debug相关 ============
 
 " ============ 拷贝路径 ============
-nnoremap <leader>' :action CopyPaths<CR>
+nnoremap <leader>' :action CopyAbsolutePath<CR>
 nnoremap <leader>; :action CopyReference<CR>
 " ============ 拷贝路径 ============
 
@@ -96,3 +102,10 @@ nnoremap ;n :action StepOver<CR>
 
 " 关闭项目
 nnoremap ,q :action CloseProject<CR>
+
+nnoremap gs :action ActivateServicesToolWindow<CR>
+nnoremap gt :action ActivateTerminalToolWindow<CR>
+
+" 移除多余的 imports
+nnoremap <leader>w :action OptimizeImports<CR>
+nnoremap <leader>a :action Annotate<CR>
