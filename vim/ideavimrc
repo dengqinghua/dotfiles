@@ -3,7 +3,7 @@ set visualbell
 
 let mapleader = " "
 
-nnoremap <silent> <leader>w :w<CR>
+nnoremap <silent> <leader>w :action ReformatCode<CR>
 nnoremap <silent> <leader>q :q<CR>
 nnoremap <silent> <leader>v v$h
 
